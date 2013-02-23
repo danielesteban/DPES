@@ -28,6 +28,6 @@ bool Game::onFrame() {
 }
 
 void Game::restart() {
-	for(byte x=0; x<LedMatrix::numColums * LedMatrix::numRows; x++) _ledMatrix->setPixel(x, 0);
+	_ledMatrix->clear();
 	_gameTimeTick = _gameTime = 0;
 }

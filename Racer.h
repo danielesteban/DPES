@@ -19,6 +19,7 @@ class Racer : public Game {
 		bool onFrame();
 		void restart();
 		void onJoyChange(/*byte pin, */byte axis, int read);
+		void onDown(/*byte pin, */byte button);
 		void animateRoad();
 	private:
 		static const byte _carY = LedMatrix::numRows - 2;
@@ -32,10 +33,12 @@ class Racer : public Game {
 			_roadData[LedMatrix::numRows][2];
 
 		bool _crashed,
+			_showingScore,
 			_crashFade;
 
 		float _carX,
-			_carXSpeed;
+			_carXSpeed,
+			_score;
 
 		unsigned int _nextRoadMinW;
 };
