@@ -62,7 +62,7 @@ void Racer::onDown(/*byte pin, */byte button) {
 				else {
 					_ledMatrix->clear();
 					_ledMatrix->printNumber(0, 1, _score / 10);
-					_ledMatrix->printNumber(0, 5, (int) _score % 10);
+					_ledMatrix->printNumber(5, 1, (int) _score % 10);
 					_showingScore = 1;
 				}
 			}
