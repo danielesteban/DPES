@@ -53,7 +53,7 @@ void setup() {
 	Wire.begin();
 	nunchucks.setup();
 
-	randomSeed(analogRead(0)); //this should be an unused pin.. but there are none left ;P
+	randomSeed(analogRead(0) + nunchucks.get()->ySum); //this should be an unused pin.. but there are none left ;P
 
 	//LedMatrix multiplex timer
 	cli(); //stop interrupts
