@@ -15,8 +15,11 @@ Racer::Racer(int refreshRate, LedMatrix * ledMatrix) : Game(refreshRate, ledMatr
 
 bool Racer::onFrame() {
 	if(!Game::onFrame()) return 0;
-	if(!_crashed) animateRoad();
-	else if(!_showingScore) {
+	if(!_crashed) {
+		_carX += _carXSpeed;
+		_carX = constrain(_carX, _roadData[_carY][0], _roadData[_carY - 1][0] + _roadData[_carY][1] - 1);
+		animateRoad();
+	} else if(!_showingScore) { //Crash animation
 		byte brightness = _ledMatrix->getPixel(_carX, _carY);
 		if(_crashFade == 0) {
 			if(brightness > 0) brightness -= 15;
@@ -72,19 +75,17 @@ void Racer::onDown(/*byte pin, */byte button) {
 void Racer::animateRoad() {
 	_roadFrameRateTick++;
 
-	_carX += _carXSpeed;
-	_carX = constrain(_carX, _roadData[_carY][0], _roadData[_carY - 1][0] + _roadData[_carY][1] - 1);
-
 	if(_roadFrameRateTick < _roadSpeed) return;
 	_roadFrameRateTick = 0;
 
-	if(_roadSpeed == minRoadSpeed) return;
 	if((_roadMinW > 2 || _roadMaxW > 3) && _gameTime >= _nextRoadMinW) {
 		if(_roadMinW > 2) _roadMinW--;
 		else _roadMaxW--;
 		_nextRoadMinW += 10;
 	}
 
+	if(_roadSpeed == minRoadSpeed) return;
+	
 	_roadW += random(-1, 2);
 	_roadW = constrain(_roadW, _roadMinW, _roadMaxW);
 
