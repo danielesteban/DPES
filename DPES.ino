@@ -1,7 +1,7 @@
 /*
-    Dani's Portable Entertainment System
-    ====================================
-    Created by Daniel Esteban, February 22, 2013.
+	Dani's Portable Entertainment System
+	====================================
+	Created by Daniel Esteban, February 22, 2013.
 
 	All is configured to run in a 8x8 LED Matrix with two 8-bit Shift Registers on an ATtiny85.
 	As input, it uses the TiniWireM library to read data from a nunchuck.
