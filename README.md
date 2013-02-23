@@ -1,7 +1,7 @@
 Dani's Portable Entertainment System
 ====================================
 
-64 LEDs + 1 Nunchuck + 1 ATtiny85 == Unlimited hours of fun
+64 LEDs + 2 Shift Registers + 1 Nunchuck + 1 ATtiny85 == Unlimited Hours of Fun
 
 See DPES.ino for more info & configuration options.
 
