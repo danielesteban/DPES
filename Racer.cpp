@@ -117,6 +117,6 @@ void Racer::animateRoad() {
 	}
 	_roadData[0][0] = _roadX;
 	_roadData[0][1] = _roadW;
-	
-	_score += 0.05;
+
+	_score += 0.06;
 }
