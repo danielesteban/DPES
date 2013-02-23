@@ -34,8 +34,9 @@ bool Racer::onFrame() {
 
 void Racer::restart() {
 	Game::restart();
-	_nextRoadMinW = 1;
-	_roadMinW = _roadMaxW = _roadW = LedMatrix::numColums - 2;
+	_nextRoadMinW = 5;
+	_roadMaxW = _roadW = LedMatrix::numColums - 2;
+	_roadMinW = _roadMaxW - 1;
 	_roadX = 1;
 	_roadSpeed = map(0, -125, 125, maxRoadSpeed, minRoadSpeed);
 	_carX = _roadW / 2;
