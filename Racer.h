@@ -31,7 +31,8 @@ class Racer : public Game {
 			_roadSpeed,
 			_roadData[LedMatrix::numRows][2];
 
-		bool crashed;
+		bool _crashed,
+			_crashFade;
 
 		float _carX,
 			_carXSpeed;
