@@ -13,6 +13,6 @@ ISP_PORT = $(ARDUINO_PORT)
 AVRDUDE_ARD_BAUDRATE = $(MONITOR_BAUDRATE)
 AVRDUDE_CONF = $(AVR_TOOLS_DIR)/etc/avrdude.conf -b $(AVRDUDE_ARD_BAUDRATE)
 
-ARDUINO_LIBS = LedMatrix Nunchucks TinyWireM
+ARDUINO_LIBS = EEPROM LedMatrix Nunchucks TinyWireM
 
 include ./libraries/Makefile/arduino-mk/Arduino.mk

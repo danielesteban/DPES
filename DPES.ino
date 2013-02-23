@@ -37,7 +37,7 @@ void onDown(/*byte pin, */byte button) {
 void onUp(/*byte pin, */byte button) {
 	switch(button) {
 		case 0: //Zbutton
-			if(nunchucks.get()->bCStatus) {
+			if(nunchucks.get(/*pin*/)->bCStatus) {
 				game->restart();
 				return;
 			}		

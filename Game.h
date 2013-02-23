@@ -17,8 +17,8 @@ class Game {
 	public:
 		Game(int refreshRate, LedMatrix * ledMatrix);
 		void onFrameTick();
-		virtual bool onFrame();
-		virtual void restart();
+		virtual bool onFrame() = 0;
+		virtual void restart() = 0;
 		virtual void onJoyChange(/*byte pin, */byte axis, int read) {};
 		virtual void onAccelChange(/*byte pin, */byte axis, int read) {};
 		virtual void onDown(/*byte pin, */byte button) {};

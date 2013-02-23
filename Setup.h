@@ -34,7 +34,6 @@ LedMatrix ledMatrix(&Register, &Port, LatchPin, ClockPin, DataPin);
 
 //Games
 #include "Racer.h"
-
 Game * game = new Racer(refreshRate, &ledMatrix); //Default Game
 
 //STOP EDITING HERE...
@@ -47,13 +46,22 @@ void onDown(/*byte pin, */byte button);
 void onUp(/*byte pin, */byte button);
 Nunchucks nunchucks(onJoyChange, onAccelChange, onDown, onUp);
 
+//Calibration: (Be sure to have the EESAVE fuse bit enabled)
+//#include "Calibration.h"
+//Game * game = new Calibration(refreshRate, &ledMatrix, &nunchucks);
+
 //SoftwareSerial Serial(SerialRxPin, SerialTxPin);
 
 void setup() {
-	Wire.begin();
+    const int rSeed = analogRead(0); //this should be an unused pin.. but there are none left ;P
+	
+    Wire.begin();
 	nunchucks.setup();
 
-	randomSeed(analogRead(0) + nunchucks.get()->ySum); //this should be an unused pin.. but there are none left ;P
+	randomSeed(rSeed + nunchucks.get()->xSum);
+
+    //No memory for this
+    //nunchucks.get(/*pin*/)->bZStatus && nunchucks.get(/*pin*/)->bCStatus && (game = new Calibration(refreshRate, &ledMatrix, &nunchucks));
 
 	//LedMatrix multiplex timer
 	cli(); //stop interrupts
