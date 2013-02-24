@@ -58,7 +58,7 @@ void setup() {
 	randomSeed(rSeed + nunchucks.get()->xSum);
 
     //Calibration: (Be sure to have the EESAVE fuse bit enabled)
-    nunchucks.get(/*pin*/)->bZStatus && nunchucks.get(/*pin*/)->bCStatus && (game = new Calibration(refreshRate, &ledMatrix, &nunchucks));
+    nunchucks.get(/*pin*/)->bZStatus && (game = new Calibration(refreshRate, &ledMatrix, &nunchucks));
 
 	//LedMatrix multiplex timer
 	cli(); //stop interrupts

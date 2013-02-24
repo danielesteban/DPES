@@ -88,7 +88,10 @@ void Racer::onDown(/*byte pin, */byte button) {
 inline void Racer::animateRoad() {
 	_roadFrameRateTick++;
 
-	if(_roadFrameRateTick < _roadSpeed) return;
+	if(_roadFrameRateTick < _roadSpeed) {
+		for(byte x=0; x<LedMatrix::numColums; x++) _ledMatrix->setPixel(x, _carY, x == (byte) _carX ? 255 : x < _roadData[_carY][0] || x >= _roadData[_carY][0] + _roadData[_carY][1] ? roadBrightness : 0);
+		return;
+	}
 	_roadFrameRateTick = 0;
 
 	if((_roadMinW > 2 || _roadMaxW > 3) && _gameTime >= _nextRoadMinW) {
@@ -105,13 +108,11 @@ inline void Racer::animateRoad() {
 	_roadX += random(-1, 2);
 	_roadX = constrain(_roadX, 1, LedMatrix::numColums - _roadW - 1);
 	
-	byte x;
-
 	if(_carX < _roadData[_carY - 1][0] || _carX >= _roadData[_carY - 1][0] + _roadData[_carY - 1][1]) { //Collision
 		_crashed = 1;
 		_score -= (_gameTime / 2);
 		_score < 0 && (_score = 0);
-		for(x=0; x<LedMatrix::numColums; x++) {
+		for(byte x=0; x<LedMatrix::numColums; x++) {
 			_ledMatrix->setPixel(x, _carY, x < _roadData[_carY][0] || x >= _roadData[_carY][0] + _roadData[_carY][1] ? roadBrightness : 0);
 		}
 		return;
@@ -120,12 +121,9 @@ inline void Racer::animateRoad() {
 	for(byte y=LedMatrix::numRows - 1; y>= 1; y--) {
 		_roadData[y][0] = _roadData[y - 1][0];
 		_roadData[y][1] = _roadData[y - 1][1];
-		for(x=0; x<LedMatrix::numColums; x++) {
-			_ledMatrix->setPixel(x, y, x < _roadData[y][0] || x >= _roadData[y][0] + _roadData[y][1] ? roadBrightness : 0);
-		}
-		if(y == _carY) _ledMatrix->setPixel(_carX, _carY, 255);
+		for(byte x=0; x<LedMatrix::numColums; x++) _ledMatrix->setPixel(x, y, x == (byte) _carX && y == _carY ? 255 : x < _roadData[y][0] || x >= _roadData[y][0] + _roadData[y][1] ? roadBrightness : 0);
 	}		
-	for(x=0; x<LedMatrix::numColums; x++) {
+	for(byte x=0; x<LedMatrix::numColums; x++) {
 		_ledMatrix->setPixel(x, x < _roadX || x >= _roadX + _roadW ? roadBrightness : 0);
 	}
 	_roadData[0][0] = _roadX;
