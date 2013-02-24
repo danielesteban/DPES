@@ -33,6 +33,7 @@ const int refreshRate = 3000; // for the LedMatrix multiplex (in Hz).
 LedMatrix ledMatrix(&Register, &Port, LatchPin, ClockPin, DataPin);
 
 //Games
+#include "Calibration.h"
 #include "Racer.h"
 Game * game = new Racer(refreshRate, &ledMatrix); //Default Game
 
@@ -46,10 +47,6 @@ void onDown(/*byte pin, */byte button);
 void onUp(/*byte pin, */byte button);
 Nunchucks nunchucks(onJoyChange, onAccelChange, onDown, onUp);
 
-//Calibration: (Be sure to have the EESAVE fuse bit enabled)
-//#include "Calibration.h"
-//Game * game = new Calibration(refreshRate, &ledMatrix, &nunchucks);
-
 //SoftwareSerial Serial(SerialRxPin, SerialTxPin);
 
 void setup() {
@@ -60,8 +57,8 @@ void setup() {
 
 	randomSeed(rSeed + nunchucks.get()->xSum);
 
-    //No memory for this
-    //nunchucks.get(/*pin*/)->bZStatus && nunchucks.get(/*pin*/)->bCStatus && (game = new Calibration(refreshRate, &ledMatrix, &nunchucks));
+    //Calibration: (Be sure to have the EESAVE fuse bit enabled)
+    nunchucks.get(/*pin*/)->bZStatus && nunchucks.get(/*pin*/)->bCStatus && (game = new Calibration(refreshRate, &ledMatrix, &nunchucks));
 
 	//LedMatrix multiplex timer
 	cli(); //stop interrupts

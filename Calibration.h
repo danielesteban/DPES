@@ -22,7 +22,6 @@ class Calibration : public Game {
 		void restart();
 		void onDown(/*byte pin, */byte button);
 		void onUp(/*byte pin, */byte button);
-		void renderSquare(byte x, byte y, bool on = true);
 	private:
 		byte _x, _y;
 		Nunchucks * _nunchucks;

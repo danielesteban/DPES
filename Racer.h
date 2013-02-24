@@ -21,8 +21,7 @@ class Racer : public Game {
 		void onJoyChange(/*byte pin, */byte axis, int read);
 		void onAccelChange(/*byte pin, */byte axis, int read);
 		void onDown(/*byte pin, */byte button);
-		void onUp(/*byte pin, */byte button);
-		void animateRoad();
+		inline void animateRoad();
 	private:
 		static const byte _carY = LedMatrix::numRows - 2;
 

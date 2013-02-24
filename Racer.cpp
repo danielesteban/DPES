@@ -10,13 +10,14 @@
 #define roadBrightness 5
 
 Racer::Racer(int refreshRate, LedMatrix * ledMatrix) : Game(refreshRate, ledMatrix) {
+	_accelOn = 0;
 	restart();
 }
 
 bool Racer::onFrame() {
 	if(!Game::onFrame()) return 0;
 	if(!_crashed) {
-		!_accelOn && (_carX += _carXSpeed);
+		_carX += _carXSpeed;
 		_carX = constrain(_carX, _roadData[_carY][0], _roadData[_carY - 1][0] + _roadData[_carY][1] - 1);
 		animateRoad();
 	} else if(!_showingScore) { //Crash animation
@@ -40,7 +41,7 @@ void Racer::restart() {
 	_roadX = 1;
 	_roadSpeed = map(0, -125, 125, maxRoadSpeed, minRoadSpeed);
 	_carX = _roadW / 2;
-	_carXSpeed = _accelOn = _crashed = _crashFade = _showingScore = _score = 0;
+	_carXSpeed = _crashed = _crashFade = _showingScore = _score = 0;
 	for(byte x=0; x<LedMatrix::numColums; x++) {
 		_roadData[x][0] = 0;
 		_roadData[x][1] = LedMatrix::numColums;
@@ -61,7 +62,7 @@ void Racer::onJoyChange(/*byte pin, */byte axis, int read) {
 void Racer::onAccelChange(/*byte pin, */byte axis, int read) {
     switch(axis) {
         case 0: //AccelX
-            _accelOn && !_crashed && (_carX = 3 + (read / 50));
+            _accelOn && (_carXSpeed = (float) read / 1023);
         break;
     }
 }
@@ -69,8 +70,7 @@ void Racer::onAccelChange(/*byte pin, */byte axis, int read) {
 void Racer::onDown(/*byte pin, */byte button) {
 	switch(button) {
 		case 0: //Zbutton
-			if(!_crashed) _accelOn = 1;
-			else {
+			if(_crashed) {
 				if(_showingScore) restart();
 				else {
 					_ledMatrix->clear();
@@ -79,17 +79,13 @@ void Racer::onDown(/*byte pin, */byte button) {
 					_showingScore = 1;
 				}
 			}
+		break;
+		case 1: //Cbutton
+			!_crashed && (_accelOn = !_accelOn);
 	}
 }
 
-void Racer::onUp(/*byte pin, */byte button) {
-	switch(button) {
-		case 0: //Zbutton
-			_accelOn = 0;
-	}
-}
-
-void Racer::animateRoad() {
+inline void Racer::animateRoad() {
 	_roadFrameRateTick++;
 
 	if(_roadFrameRateTick < _roadSpeed) return;
