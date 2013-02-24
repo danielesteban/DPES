@@ -7,6 +7,7 @@
 	As input, it uses the TiniWireM library to read data from a nunchuck.
 	Edit Setup.h for Port/Pin Numbers & other configurations.
 	(The number of row/columns of the matrix is hardcoded into libraries/LedMatrix/LedMatrix.h)
+	(Also in LedMatrix.h: If you wanna use the NUMBERS_IN_EEPROM define, Be sure to compile & run first time with the POPULATE_EEPROM define)
 	(The code supports multiple nunchucks, but its commented out to save up memory.. probably i'll make it with defines in a near future)
 
 	- For now I only have coded a racing game.
